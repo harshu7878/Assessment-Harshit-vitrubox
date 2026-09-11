@@ -1,0 +1,517 @@
+# Software Tester (QA) – Assessment Test
+
+Full Name: Harshit
+Email ID: harshit.singh.cse.2023@miet.ac.in
+Contact Number: 8433229932
+
+## 1. My Testing Approach
+
+The application is a Task Management Application where a user can register, log in and manage tasks. Since the application is close to production and there is no existing test documentation, I would first understand the complete user flow and then test each feature individually as well as together.
+
+I would mainly focus on:
+
+* Whether the user can register and log in correctly.
+* Whether invalid information is properly rejected.
+* Whether a logged-in user can create, view, edit and delete tasks.
+* Whether the task data is actually saved correctly in the database.
+* Whether one user can access another user's tasks.
+* Whether the application gives proper error messages when something goes wrong.
+* Boundary cases such as empty values, very long inputs and special characters.
+
+I would start with the basic positive cases and then move towards negative and edge cases. For a production-ready application, I would give more importance to authentication, authorization and database-related issues because these can affect user data.
+
+---
+
+# 2. Registration Testing
+
+### Test Scenario 1 – Successful Registration
+
+I would enter valid information in all the required fields and click on the Register button.
+
+**Expected result:**
+The account should be created successfully and the user should see an appropriate success message or be redirected to the login page.
+
+### Test Scenario 2 – Empty Required Fields
+
+I would leave the required fields empty and try to register.
+
+**Expected result:**
+The application should not create the account and should show proper validation messages for the required fields.
+
+### Test Scenario 3 – Invalid Email
+
+I would try different invalid email formats such as:
+
+* `abc`
+* `abc@`
+* `abc.com`
+
+**Expected result:**
+The application should identify the email as invalid and should not allow registration.
+
+### Test Scenario 4 – Existing Email
+
+I would first register an account and then try to register again using the same email.
+
+**Expected result:**
+The application should not create a duplicate account. It should show a message such as "Email already registered."
+
+### Test Scenario 5 – Invalid Password
+
+I would test passwords that do not satisfy the application's password requirements.
+
+**Expected result:**
+The user should be informed about the password requirement and registration should not proceed.
+
+### Test Scenario 6 – Password Confirmation
+
+If the registration form has a confirm password field, I would enter two different passwords.
+
+**Expected result:**
+The application should show a mismatch error and should not create the account.
+
+### Test Scenario 7 – Spaces as Input
+
+I would enter only spaces in the required fields.
+
+**Expected result:**
+The application should treat these fields as empty and should not create an account.
+
+### Test Scenario 8 – Boundary Values
+
+I would test the minimum and maximum allowed length for fields such as name, email and password.
+
+**Expected result:**
+Valid boundary values should work, while values beyond the allowed limit should be rejected properly.
+
+### Test Scenario 9 – Special Characters
+
+I would check how the registration form handles special characters in fields where they are allowed.
+
+**Expected result:**
+The application should handle them safely without breaking the page or storing corrupted data.
+
+### Test Scenario 10 – Password Visibility
+
+While entering the password, I would check whether the password is hidden/masked.
+
+**Expected result:**
+The password should not normally be visible as plain text.
+
+---
+
+# 3. Login Testing
+
+### Test Scenario 1 – Valid Login
+
+I would enter the credentials of a registered user.
+
+**Expected result:**
+The user should successfully log in and reach the task management area.
+
+### Test Scenario 2 – Wrong Password
+
+I would enter a valid email but an incorrect password.
+
+**Expected result:**
+Login should fail and a proper error message should be displayed.
+
+### Test Scenario 3 – Unregistered User
+
+I would try logging in with an email that has not been registered.
+
+**Expected result:**
+The user should not be allowed to log in.
+
+### Test Scenario 4 – Empty Fields
+
+I would click Login without entering an email or password.
+
+**Expected result:**
+Required field validation should be displayed.
+
+### Test Scenario 5 – Invalid Email Format
+
+I would enter an invalid email format.
+
+**Expected result:**
+The application should show an appropriate validation message.
+
+### Test Scenario 6 – Password Masking
+
+I would enter a password and check how it appears in the password field.
+
+**Expected result:**
+The password should be masked.
+
+### Test Scenario 7 – Session Check
+
+After logging in, I would refresh the page and move between different task pages.
+
+**Expected result:**
+The user should remain logged in while the session is valid.
+
+### Test Scenario 8 – Access After Logout
+
+I would log out and then try opening the task page directly using its URL.
+
+**Expected result:**
+The application should not allow access to the protected page and should redirect the user to the login page.
+
+---
+
+# 4. Task Creation
+
+Once the login functionality is working, I would test the task creation feature.
+
+### Test Case 1 – Create a Valid Task
+
+I would log in, enter valid task information and click Save/Create.
+
+**Expected result:**
+The task should be created successfully and should appear in the task list.
+
+### Test Case 2 – Create Task Without Required Information
+
+I would leave the required task field empty and click Save.
+
+**Expected result:**
+The task should not be created and the user should see a validation message.
+
+### Test Case 3 – Only Spaces
+
+I would enter spaces instead of actual task information.
+
+**Expected result:**
+The application should reject the input rather than creating an empty-looking task.
+
+### Test Case 4 – Very Long Task
+
+I would enter a very large amount of text.
+
+**Expected result:**
+The application should either restrict the input or display a proper validation message. It should not crash.
+
+### Test Case 5 – Special Characters
+
+I would create a task containing normal special characters.
+
+**Expected result:**
+The task should be saved and displayed correctly.
+
+### Test Case 6 – Multiple Tasks
+
+I would create several tasks one after another.
+
+**Expected result:**
+All tasks should appear separately. Creating a new task should not overwrite an existing task.
+
+### Test Case 7 – Database Persistence
+
+After creating a task, I would refresh the page and also log out and log in again.
+
+**Expected result:**
+The task should still be available because tasks are stored in the database.
+
+---
+
+# 5. Viewing Tasks
+
+I would check the task list after creating different tasks.
+
+Some of the things I would verify are:
+
+1. Newly created tasks are displayed.
+2. Task information is displayed correctly.
+3. The same task is not displayed twice.
+4. Refreshing the page does not remove the task.
+5. If there are no tasks, the application shows a proper empty-state message instead of a broken page.
+6. A large number of tasks should still load correctly.
+7. Most importantly, a user should only see their own tasks.
+
+For example, if User A creates "Complete Project Report", User B should not be able to see that task.
+
+---
+
+# 6. Editing a Task
+
+### Test Case 1 – Edit Valid Task
+
+I would select an existing task, change its information and save it.
+
+**Expected result:**
+The updated information should be displayed in the task list.
+
+### Test Case 2 – Edit With Empty Information
+
+I would remove the required task information and try to save.
+
+**Expected result:**
+The application should reject the update and show validation.
+
+### Test Case 3 – Edit With Long Input
+
+I would enter data beyond the allowed length.
+
+**Expected result:**
+The application should handle it properly without crashing.
+
+### Test Case 4 – Cancel Editing
+
+I would open a task for editing, change the information and then cancel.
+
+**Expected result:**
+The original task information should remain unchanged.
+
+### Test Case 5 – Verify Database Update
+
+After editing the task, I would refresh the page or log in again.
+
+**Expected result:**
+The updated task information should still be present.
+
+### Test Case 6 – Unauthorized Editing
+
+I would verify that User A cannot edit User B's task.
+
+**Expected result:**
+The application should prevent unauthorized modification.
+
+---
+
+# 7. Deleting a Task
+
+### Test Case 1 – Delete Existing Task
+
+I would select a task and click Delete.
+
+**Expected result:**
+The task should be removed from the list.
+
+### Test Case 2 – Cancel Delete
+
+If a confirmation popup is provided, I would select Cancel.
+
+**Expected result:**
+The task should remain unchanged.
+
+### Test Case 3 – Verify After Refresh
+
+I would delete a task and refresh the page.
+
+**Expected result:**
+The deleted task should not come back.
+
+### Test Case 4 – Delete One Task From Multiple Tasks
+
+Suppose there are three tasks. I would delete the second task.
+
+**Expected result:**
+Only the selected task should be deleted. The other two should remain.
+
+### Test Case 5 – Unauthorized Delete
+
+I would check whether a user can delete another user's task.
+
+**Expected result:**
+The application should prevent this action.
+
+---
+
+# 8. Input Validation and Error Handling
+
+I would specifically test how the application behaves when the user enters unexpected information or when something goes wrong.
+
+### Cases I would check:
+
+* Empty required fields
+* Spaces only
+* Invalid email
+* Invalid password
+* Very short input
+* Very long input
+* Special characters
+* Duplicate registration
+* Wrong login credentials
+* Repeated clicking of Save
+* Network/API failure
+* Database failure
+* Server error
+
+The error message should be understandable to a normal user. For example, instead of showing a technical message such as a database exception or server stack trace, the application should show something like:
+
+**"Unable to save the task. Please try again."**
+
+I would also verify that an error does not partially create or modify a record in the database.
+
+---
+
+# 9. Important Edge Cases
+
+Apart from normal testing, I would check some less common situations because these can expose bugs that normal testing may miss.
+
+### 1. Double-clicking Save
+
+If the user clicks the Save button twice quickly, the application should ideally create only one task.
+
+### 2. Refresh During an Operation
+
+I would check what happens if the user refreshes the page after creating or editing a task.
+
+### 3. Very Long Input
+
+Large input should not break the UI or cause a database error.
+
+### 4. Whitespace
+
+Inputs containing only spaces should not be accepted as valid information.
+
+### 5. Multiple Users
+
+I would use separate accounts and verify that their task data remains separate.
+
+### 6. Empty Task List
+
+A newly registered user may not have any tasks. The application should handle this situation properly.
+
+### 7. Session Expiry
+
+If the session expires, the application should ask the user to log in again rather than showing an unexpected error.
+
+---
+
+# 10. Potential Bugs / Risk Areas
+
+Since the application has not actually been executed, these are potential bugs that I would specifically look for during testing.
+
+### Bug 1 – User Can See Another User's Tasks
+
+**Severity: Critical**
+
+There could be a problem where tasks are retrieved without properly checking the logged-in user's ID.
+
+**Impact:**
+A user may be able to see private tasks belonging to another user. This is a serious data privacy issue.
+
+---
+
+### Bug 2 – User Can Edit/Delete Another User's Task
+
+**Severity: Critical**
+
+Even if the task list is displayed correctly, the backend might not properly verify task ownership during edit or delete operations.
+
+**Impact:**
+A user could modify or delete someone else's data.
+
+---
+
+### Bug 3 – Deleted Task Comes Back After Refresh
+
+**Severity: Major**
+
+The UI may remove the task but the database record might not actually be deleted.
+
+**Impact:**
+After refreshing the page, the deleted task could appear again, resulting in data inconsistency.
+
+---
+
+### Bug 4 – Edited Task Is Not Properly Saved
+
+**Severity: Major**
+
+The application may display the new task information temporarily but fail to update the database.
+
+**Impact:**
+The old information may come back after refreshing or logging in again.
+
+---
+
+### Bug 5 – Duplicate Tasks Created
+
+**Severity: Major**
+
+Clicking the Save button multiple times may send multiple requests.
+
+**Impact:**
+The same task could be created more than once.
+
+---
+
+### Bug 6 – Empty or Space-Only Tasks Accepted
+
+**Severity: Major**
+
+The application may only check whether the field contains characters, without checking whether they are meaningful.
+
+**Impact:**
+Invalid or useless task records could be stored.
+
+---
+
+### Bug 7 – Very Long Input Causes an Error
+
+**Severity: Major**
+
+There may be no proper input-length validation.
+
+**Impact:**
+Large inputs could cause UI problems, failed requests or database errors.
+
+---
+
+### Bug 8 – Technical Error Details Shown to User
+
+**Severity: Major**
+
+A server or database error might display technical information such as a stack trace.
+
+**Impact:**
+This is confusing for users and can also reveal information about the application's internal implementation.
+
+---
+
+### Bug 9 – Logout Does Not Properly End the Session
+
+**Severity: Critical**
+
+After logout, an old session might still be valid.
+
+**Impact:**
+Someone using the same computer could potentially open the task page and access the previous user's information.
+
+---
+
+### Bug 10 – Duplicate Registration
+
+**Severity: Major**
+
+The system might allow two accounts to be created with the same email address.
+
+**Impact:**
+This can create login confusion and data consistency problems.
+
+---
+
+# 11. What I Would Test First
+
+If I have limited time, I would not start with minor UI issues. I would first test the functionality that can affect user data.
+
+My order would be:
+
+**1. Registration → 2. Login → 3. Authentication/Authorization → 4. Create Task → 5. View Task → 6. Edit Task → 7. Delete Task → 8. Validation → 9. Error Handling → 10. Regression Testing**
+
+I would especially test whether users can access another user's data because that would be a production-blocking issue.
+
+---
+
+# 12. Final Testing Thought
+
+For me, successful testing does not only mean checking whether the buttons work. I would also check what happens to the data after every operation.
+
+For example, if I create a task and it appears on the screen, I would not consider the test completely successful yet. I would refresh the page or log in again and check whether the same task is still available. Similarly, after editing or deleting a task, I would verify that the change is actually reflected in the stored data.
+
+I would also test the application from the point of view of different users to make sure that one user's data cannot be accessed or modified by another user.
+
+Since this application is close to production, I would recommend fixing all **Critical** issues before release and giving high priority to issues related to authentication, authorization, database consistency and core CRUD functionality.
